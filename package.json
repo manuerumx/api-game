@@ -1,0 +1,23 @@
+{
+  "name": "apigame",
+  "version": "1.0.0",
+  "description": "Game API v1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "API",
+    "Game",
+    "Motor"
+  ],
+  "author": "Manuel González Rivera",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.13.2",
+    "express": "^4.13.1",
+    "jwt-simple": "^0.3.0",
+    "mongoose": "^4.0.7",
+    "morgan": "^1.6.1"
+  }
+}
