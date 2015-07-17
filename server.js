@@ -1,8 +1,20 @@
 var express = require('express');
 var path = require('path');
+var fs = require('fs');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var app = express();
+
+// setup the logger
+// create a write stream (in append mode)
+var accessLogStream = fs.createWriteStream(__dirname + 'logs/access.log',{flags: 'a'});
+
+if (app.get('env') !== 'production') {
+    app.use(logger('dev'));
+}
+app.use(logger('combined', {stream: accessLogStream}));
+
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.all('/*', function(req, res, next) {
@@ -21,7 +33,7 @@ app.all('/*', function(req, res, next) {
 // Only the requests that start with /api/v1/* will be checked for the token.
 // Any URL's that do not follow the below pattern should be avoided unless you
 // are sure that authentication is not needed
-app.all('/api/v1/*', [require('./middlewares/validateRequest')]);
+app.all('/api/v1/*', [require('./config/validateRequest')]);
 app.use('/', require('./routes'));
 // If no route is matched by now, it must be a 404
 app.use(function(req, res, next) {
