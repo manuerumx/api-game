@@ -7,7 +7,7 @@ var app = express();
 
 // setup the logger
 // create a write stream (in append mode)
-var accessLogStream = fs.createWriteStream(__dirname + 'logs/access.log',{flags: 'a'});
+var accessLogStream = fs.createWriteStream(__dirname + '/logs/access.log',{flags: 'a'});
 
 if (app.get('env') !== 'production') {
     app.use(logger('dev'));
@@ -35,6 +35,7 @@ app.all('/*', function(req, res, next) {
 // are sure that authentication is not needed
 app.all('/api/v1/*', [require('./config/validateRequest')]);
 app.use('/', require('./routes'));
+
 // If no route is matched by now, it must be a 404
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
